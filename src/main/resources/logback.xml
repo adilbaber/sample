@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>
+        %d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n
+      </pattern>
+    </encoder>
+  </appender>
+
+    <appender name="http" class="com.splunk.logging.HttpEventCollectorLogbackAppender">
+        <url>http://localhost:8088</url>
+        <token>4327fd11-792e-49e9-9184-0c481fe121c8</token>
+        <index>oes</index>
+        <source>adil</source>
+        <sourcetype>adil</sourcetype>      
+        <batch_size_count>0</batch_size_count>
+        <disableCertificateValidation>true</disableCertificateValidation>       
+    </appender>
+
+    <logger name="com.splunk" additivity="false" level="INFO">
+        <appender-ref ref="http"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="http"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
